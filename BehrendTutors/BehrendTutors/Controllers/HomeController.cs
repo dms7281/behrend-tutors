@@ -1,5 +1,7 @@
+using BehrendTutors.Data;
 using BehrendTutors.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace BehrendTutors.Controllers
@@ -7,15 +9,17 @@ namespace BehrendTutors.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly BehrendTutorsContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, BehrendTutorsContext context)
         {
             _logger = logger;
+            _context = context;
         }
-
-        public IActionResult Index()
+        
+        public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.Class.ToListAsync());
         }
 
         public IActionResult Privacy()
