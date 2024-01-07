@@ -7,6 +7,7 @@
         public int CourseNum { get; set; }
         public int SectionNum { get; set; }
         public string? ClassTitle { get; set; }
+        public int ClassNum { get; set; }
 
     }
 }

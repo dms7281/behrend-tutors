@@ -4,7 +4,7 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container px-4">
+<div class="container-fluid">
     <div class="row gx-5">
         <div class="col-xl-4">
             <div class="p-3 border bg-light">My favorite classes</div>
@@ -13,8 +13,25 @@
             <div class="p-3 border bg-light">
                 <ul class="list-group">
                     @foreach (var item in Model)
-                    {
-                        <li class="list-group-item">@Html.DisplayFor(modelItem => item.ClassTitle)</li>
+                    { //@Html.DisplayFor(modelItem => item.ClassTitle)
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xl-10 justify-content-xl-start">
+                                    @Html.DisplayFor(modelItem => item.Subject)-@Html.DisplayFor(modelItem => item.CourseNum)
+                                </div>
+                                <div class="col-xl-2 justify-content-xl-end bg-black">
+                                    <!--Button goes here-->
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl justify-content-xl-start">
+                                    @Html.DisplayFor(modelItem => item.ClassNum)
+                                </div>
+                                <div class="col-xl justify-content-xl-end">
+                                    @Html.DisplayFor(modelItem => item.ClassTitle)
+                                </div>
+                            </div>
+                        </li>
                     }
                 </ul>
             </div>
