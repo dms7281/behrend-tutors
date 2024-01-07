@@ -1,4 +1,9 @@
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using BehrendTutors.Data;
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddDbContext<BehrendTutorsContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("BehrendTutorsContext") ?? throw new InvalidOperationException("Connection string 'BehrendTutorsContext' not found.")));
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
