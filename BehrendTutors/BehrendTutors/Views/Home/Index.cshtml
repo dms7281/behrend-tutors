@@ -2,14 +2,14 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    var month = DateTime.Now.Month;
+    var year = DateTime.Now.Year;
+    var multiValue = new DateTime[] { new DateTime(year, month, 10), new DateTime(year, month, 15), new DateTime(year, month, 25) };
 }
 
 <div class="container-fluid">
     <div class="row gx-5">
-        <div class="col-xl-4">
-            <div class="p-3 border bg-light">My favorite classes</div>
-        </div>
-        <div class="col-xl-4">
+        <div class="col-xl-3">
             <div class="p-3 border bg-light">
                 <ul class="list-group">
                     @foreach (var item in Model)
@@ -18,9 +18,6 @@
                             <div class="row">
                                 <div class="col-xl-10 justify-content-xl-start">
                                     @Html.DisplayFor(modelItem => item.Subject)-@Html.DisplayFor(modelItem => item.CourseNum)
-                                </div>
-                                <div class="col-xl-2 justify-content-xl-end bg-black">
-                                    <!--Button goes here-->
                                 </div>
                             </div>
                             <div class="row">
@@ -36,8 +33,19 @@
                 </ul>
             </div>
         </div>
-        <div class="col-xl-4">
-            <div class="p-3 border bg-light">Session information</div>
+        <div class="col-xl-3">
+            <div class="p-3 border bg-light">
+                <div class="col-lg-7 control-section sb-property-border">
+                <div class="calender-section">
+                    <div id="calender-control" class="col-lg-6 col-sm-8 col-md-8 multiselectWrapper">
+                        <ejs-calendar id="calendar" isMultiSelection="true" values="@multiValue" created="changeValue" change="changeValue"></ejs-calendar>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-6">
+            <div class="p-3 border bg-light">Weekly view</div>
         </div>
     </div>
 </div>
