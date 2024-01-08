@@ -15,5 +15,7 @@ namespace BehrendTutors.Data
         }
 
         public DbSet<BehrendTutors.Models.Class> Class { get; set; } = default!;
+        public DbSet<BehrendTutors.Models.Tutor> Tutor { get; set; } = default!;
+        public DbSet<BehrendTutors.Models.TutorSession> TutorSession { get; set; } = default!;
     }
 }

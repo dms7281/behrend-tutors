@@ -4,6 +4,7 @@ using BehrendTutors.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BehrendTutors.Migrations
 {
     [DbContext(typeof(BehrendTutorsContext))]
-    partial class BehrendTutorsContextModelSnapshot : ModelSnapshot
+    [Migration("20240108144653_Tutors")]
+    partial class Tutors
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,55 +77,11 @@ namespace BehrendTutors.Migrations
                     b.ToTable("Tutor");
                 });
 
-            modelBuilder.Entity("BehrendTutors.Models.TutorSession", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int?>("Classid")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("SessionDateTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("StudentEmail")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("TutorId")
-                        .HasColumnType("int");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("Classid");
-
-                    b.HasIndex("TutorId");
-
-                    b.ToTable("TutorSession");
-                });
-
             modelBuilder.Entity("BehrendTutors.Models.Class", b =>
                 {
                     b.HasOne("BehrendTutors.Models.Tutor", null)
                         .WithMany("TutoredClasses")
                         .HasForeignKey("TutorId");
-                });
-
-            modelBuilder.Entity("BehrendTutors.Models.TutorSession", b =>
-                {
-                    b.HasOne("BehrendTutors.Models.Class", "Class")
-                        .WithMany()
-                        .HasForeignKey("Classid");
-
-                    b.HasOne("BehrendTutors.Models.Tutor", "Tutor")
-                        .WithMany()
-                        .HasForeignKey("TutorId");
-
-                    b.Navigation("Class");
-
-                    b.Navigation("Tutor");
                 });
 
             modelBuilder.Entity("BehrendTutors.Models.Tutor", b =>
