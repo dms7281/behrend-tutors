@@ -61,6 +61,9 @@ public static class SeedData
                     ClassNum = 24328
                 }
 
+                
+                
+
                 //Pretty sure the way the seed data is set up is why the code wont run
 
 
