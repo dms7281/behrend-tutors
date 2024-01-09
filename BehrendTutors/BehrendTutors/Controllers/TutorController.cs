@@ -22,7 +22,7 @@ namespace BehrendTutors.Controllers
         // GET: Tutor
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tutor.ToListAsync());
+            return View();
         }
 
         // GET: Tutor/Details/5
@@ -152,21 +152,6 @@ namespace BehrendTutors.Controllers
         private bool TutorExists(int id)
         {
             return _context.Tutor.Any(e => e.Id == id);
-        }
-
-        public IActionResult AssignClass(int tutorId, int classId)
-        {
-            var tutor = _context.Tutor.Find(tutorId);
-            var @class = _context.Class.Find(classId);
-
-            if (tutor != null && @class != null)
-            {
-                var tutorClass = new TutorClass { TutorId = tutorId, ClassId = classId };
-                _context.TutorClasses.Add(tutorClass);
-                _context.SaveChanges();
-            }
-
-            return RedirectToAction("Index");
         }
     }
 }

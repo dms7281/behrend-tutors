@@ -8,6 +8,5 @@
         public int SectionNum { get; set; }
         public string? ClassTitle { get; set; }
         public int ClassNum { get; set; }
-        public List<TutorClass>? TutorClasses { get; set; }
     }
 }
