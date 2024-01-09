@@ -14,10 +14,10 @@ namespace BehrendTutors.Data
         {
         }
 
-        public DbSet<BehrendTutors.Models.Class> Class { get; set; } = default!;
-        public DbSet<BehrendTutors.Models.Tutor> Tutor { get; set; } = default!;
-        public DbSet<BehrendTutors.Models.TutorSession> TutorSession { get; set; } = default!;
-
+        public DbSet<BehrendTutors.Models.Class> Class { get; set; }
+        public DbSet<BehrendTutors.Models.Tutor> Tutor { get; set; }
+        public DbSet<BehrendTutors.Models.TutorSession> TutorSession { get; set; }
+        public DbSet<BehrendTutors.Models.TutorClass> TutorClasses { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TutorClass>()
