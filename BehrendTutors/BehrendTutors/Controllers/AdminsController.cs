@@ -24,6 +24,14 @@ namespace BehrendTutors.Controllers
             }
 
             ViewData["Tutors"] = tutorList;
+
+            var classList = new List<Class>();
+            foreach (Class c in _context.Class)
+            {
+                classList.Add(c);
+            }
+
+            ViewData["Classes"] = classList;
             return View(await _context.Admin.ToListAsync());
         }
 

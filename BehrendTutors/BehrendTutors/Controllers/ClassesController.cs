@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using BehrendTutors.Data;
 using BehrendTutors.Models;
+//using AspNetCore;
 
 namespace BehrendTutors.Controllers
 {
@@ -60,9 +61,9 @@ namespace BehrendTutors.Controllers
             {
                 _context.Add(@class);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Admins");
             }
-            return View(@class);
+            return RedirectToAction("Index", "Admins");
         }
 
         // GET: Classes/Edit/5

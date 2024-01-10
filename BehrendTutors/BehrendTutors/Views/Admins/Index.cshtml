@@ -5,6 +5,7 @@
 }
 @{
     IEnumerable<Tutor> tutors = ViewData["Tutors"] as IEnumerable<Tutor>;
+    IEnumerable<Class> classes = ViewData["Classes"] as IEnumerable<Class>;
 }
 
 <h1>Index</h1>
@@ -17,9 +18,12 @@
         <div class="col-xl-6">
             <a asp-action="CreateTutor">Create New Tutor</a>
         </div>
+        <div class="col-xl-6">
+            <a asp-controller="Classes" asp-action="Create">Create New Class</a>
+        </div>
     </div>
     <div class="row">
-        <div class="col-xl-6">
+        <div class="col">
             <table class="table">
                 <thead>
                     <tr>
@@ -51,7 +55,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-xl-6">
+        <div class="col">
             <table class="table">
                 <thead>
                     <tr>
@@ -83,6 +87,30 @@
                     }
                 </tbody>
             </table>
+        </div>
+        <div class="col">
+            <div class="p-3 border bg-light">
+                <ul class="list-group">
+                    @foreach (Class c in classes)
+                    { //@Html.DisplayFor(modelItem => item.ClassTitle)
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xl-10 justify-content-xl-start">
+                                    @Html.DisplayFor(modelItem => c.Subject)-@Html.DisplayFor(modelItem => c.CourseNum)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl justify-content-xl-start">
+                                    @Html.DisplayFor(modelItem => c.ClassNum)
+                                </div>
+                                <div class="col-xl justify-content-xl-end">
+                                    @Html.DisplayFor(modelItem => c.ClassTitle)
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
         </div>
     </div>
 </div>
