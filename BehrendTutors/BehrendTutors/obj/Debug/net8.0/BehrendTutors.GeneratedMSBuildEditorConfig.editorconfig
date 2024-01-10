@@ -26,6 +26,30 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Programs\Personal\BehrendTutors\behrend-tutors\BehrendTutors\BehrendTutors
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Programs/Personal/BehrendTutors/behrend-tutors/BehrendTutors/BehrendTutors/Views/Admins/CreateAdmin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5zXENyZWF0ZUFkbWluLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Programs/Personal/BehrendTutors/behrend-tutors/BehrendTutors/BehrendTutors/Views/Admins/CreateTutor.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5zXENyZWF0ZVR1dG9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Programs/Personal/BehrendTutors/behrend-tutors/BehrendTutors/BehrendTutors/Views/Admins/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5zXERlbGV0ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Programs/Personal/BehrendTutors/behrend-tutors/BehrendTutors/BehrendTutors/Views/Admins/Details.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5zXERldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Programs/Personal/BehrendTutors/behrend-tutors/BehrendTutors/BehrendTutors/Views/Admins/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5zXEVkaXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Programs/Personal/BehrendTutors/behrend-tutors/BehrendTutors/BehrendTutors/Views/Admins/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWRtaW5zXEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Programs/Personal/BehrendTutors/behrend-tutors/BehrendTutors/BehrendTutors/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

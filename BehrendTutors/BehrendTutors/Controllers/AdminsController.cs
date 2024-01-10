@@ -1,32 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using BehrendTutors.Data;
+﻿using BehrendTutors.Data;
 using BehrendTutors.Models;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BehrendTutors.Controllers
 {
-    public class TutorSessionsController : Controller
+    public class AdminsController : Controller
     {
         private readonly BehrendTutorsContext _context;
 
-        public TutorSessionsController(BehrendTutorsContext context)
+        public AdminsController(BehrendTutorsContext context)
         {
             _context = context;
         }
 
-        // GET: TutorSessions
+        // GET: Admins
         public async Task<IActionResult> Index()
         {
-            return View(await _context.TutorSession.ToListAsync());
+            var tutorList = new List<Tutor>();
+            foreach (Tutor t in _context.Tutor)
+            {
+                tutorList.Add(t);
+            }
+
+            ViewData["Tutors"] = tutorList;
+            return View(await _context.Admin.ToListAsync());
         }
 
-        // GET: TutorSessions/Details/5
+        // GET: Admins/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -34,39 +35,62 @@ namespace BehrendTutors.Controllers
                 return NotFound();
             }
 
-            var tutorSession = await _context.TutorSession
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (tutorSession == null)
+            var admin = await _context.Admin
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (admin == null)
             {
                 return NotFound();
             }
 
-            return View(tutorSession);
+            return View(admin);
         }
 
-        // GET: TutorSessions/Create
+        // GET: Admins/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: TutorSessions/Create
+        // GET: Admins/Create
+        public IActionResult CreateAdmin()
+        {
+            return View();
+        }
+
+        // GET: Admins/Create
+        public IActionResult CreateTutor()
+        {
+            return View();
+        }
+
+        // POST: Admins/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SessionDateTime")] TutorSession tutorSession)
+        public async Task<IActionResult> CreateAdmin([Bind("Id,Name,Email")] Admin admin)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tutorSession);
+                _context.Add(admin);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tutorSession);
+            return View(admin);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateTutor([Bind("Name,Email")] Tutor tutor)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(tutor);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(tutor);
         }
 
-        // GET: TutorSessions/Edit/5
+        // GET: Admins/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +98,22 @@ namespace BehrendTutors.Controllers
                 return NotFound();
             }
 
-            var tutorSession = await _context.TutorSession.FindAsync(id);
-            if (tutorSession == null)
+            var admin = await _context.Admin.FindAsync(id);
+            if (admin == null)
             {
                 return NotFound();
             }
-            return View(tutorSession);
+            return View(admin);
         }
 
-        // POST: TutorSessions/Edit/5
+        // POST: Admins/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,SessionDateTime,StudentEmail")] TutorSession tutorSession)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email")] Admin admin)
         {
-            if (id != tutorSession.id)
+            if (id != admin.Id)
             {
                 return NotFound();
             }
@@ -98,12 +122,12 @@ namespace BehrendTutors.Controllers
             {
                 try
                 {
-                    _context.Update(tutorSession);
+                    _context.Update(admin);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TutorSessionExists(tutorSession.id))
+                    if (!AdminExists(admin.Id))
                     {
                         return NotFound();
                     }
@@ -114,10 +138,10 @@ namespace BehrendTutors.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tutorSession);
+            return View(admin);
         }
 
-        // GET: TutorSessions/Delete/5
+        // GET: Admins/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,36 +149,34 @@ namespace BehrendTutors.Controllers
                 return NotFound();
             }
 
-            var tutorSession = await _context.TutorSession
-                .FirstOrDefaultAsync(m => m.id == id);
-            if (tutorSession == null)
+            var admin = await _context.Admin
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (admin == null)
             {
                 return NotFound();
             }
 
-            return View(tutorSession);
+            return View(admin);
         }
 
-        // POST: TutorSessions/Delete/5
+        // POST: Admins/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tutorSession = await _context.TutorSession.FindAsync(id);
-            if (tutorSession != null)
+            var admin = await _context.Admin.FindAsync(id);
+            if (admin != null)
             {
-                _context.TutorSession.Remove(tutorSession);
+                _context.Admin.Remove(admin);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TutorSessionExists(int id)
+        private bool AdminExists(int id)
         {
-            return _context.TutorSession.Any(e => e.id == id);
+            return _context.Admin.Any(e => e.Id == id);
         }
-
-        
     }
 }

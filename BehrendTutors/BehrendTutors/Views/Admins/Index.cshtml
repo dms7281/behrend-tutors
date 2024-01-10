@@ -1,0 +1,88 @@
+﻿@model IEnumerable<BehrendTutors.Models.Admin>
+
+@{
+    ViewData["Title"] = "Index";
+}
+@{
+    IEnumerable<Tutor> tutors = ViewData["Tutors"] as IEnumerable<Tutor>;
+}
+
+<h1>Index</h1>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-6">
+            <a asp-action="CreateAdmin">Create New Admin</a>
+        </div>
+        <div class="col-xl-6">
+            <a asp-action="CreateTutor">Create New Tutor</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xl-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Admin Name
+                        </th>
+                        <th>
+                            Admin Email
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+            @foreach (var item in Model) {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        </td>
+                    </tr>
+            }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-xl-6">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            Tutor Name
+                        </th>
+                        <th>
+                            Tutor Email
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (Tutor tutor in tutors)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => @tutor.Name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => @tutor.Email)
+                            </td>
+                            <td>
+                                @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
