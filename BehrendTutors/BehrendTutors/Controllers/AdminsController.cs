@@ -59,24 +59,13 @@ namespace BehrendTutors.Controllers
             return View();
         }
 
-        // GET: Admins/Create
-        public IActionResult CreateAdmin()
-        {
-            return View();
-        }
-
-        // GET: Admins/Create
-        public IActionResult CreateTutor()
-        {
-            return View();
-        }
 
         // POST: Admins/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAdmin([Bind("Id,Name,Email")] Admin admin)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email")] Admin admin)
         {
             if (ModelState.IsValid)
             {
@@ -85,17 +74,6 @@ namespace BehrendTutors.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(admin);
-        }
-        [HttpPost]
-        public async Task<IActionResult> CreateTutor([Bind("Name,Email")] Tutor tutor)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(tutor);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(tutor);
         }
 
         // GET: Admins/Edit/5

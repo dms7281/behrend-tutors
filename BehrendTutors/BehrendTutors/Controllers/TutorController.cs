@@ -22,7 +22,7 @@ namespace BehrendTutors.Controllers
         // GET: Tutor
         public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.Tutor.ToListAsync());
         }
 
         // GET: Tutor/Details/5
@@ -60,7 +60,7 @@ namespace BehrendTutors.Controllers
             {
                 _context.Add(tutor);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Admins");
             }
             return View(tutor);
         }

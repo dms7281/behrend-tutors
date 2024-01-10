@@ -63,7 +63,7 @@ namespace BehrendTutors.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Admins");
             }
-            return RedirectToAction("Index", "Admins");
+            return View(@class);
         }
 
         // GET: Classes/Edit/5
