@@ -55,7 +55,7 @@ namespace BehrendTutors.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,Subject,CourseNum,SectionNum,ClassTitle")] Class @class)
+        public async Task<IActionResult> Create([Bind("id,Subject,CourseNum,SectionNum,ClassTitle,ClassNum")] Class @class)
         {
             if (ModelState.IsValid)
             {
@@ -87,7 +87,7 @@ namespace BehrendTutors.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,Subject,CourseNum,SectionNum,ClassTitle")] Class @class)
+        public async Task<IActionResult> Edit(int id, [Bind("id,Subject,CourseNum,SectionNum,ClassTitle,ClassNum")] Class @class)
         {
             if (id != @class.id)
             {
