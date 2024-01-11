@@ -22,7 +22,14 @@ namespace BehrendTutors.Controllers
         // GET: Tutor
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tutor.ToListAsync());
+            var classList = new List<Class>();
+            foreach (Class c in _context.Class)
+            {
+                classList.Add(c);
+            }
+
+            ViewData["Classes"] = classList;
+            return View(await _context.TutorSession.ToListAsync());
         }
 
         // GET: Tutor/Details/5
@@ -111,7 +118,7 @@ namespace BehrendTutors.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Admins");
             }
             return View(tutor);
         }
@@ -146,7 +153,7 @@ namespace BehrendTutors.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Admins");
         }
 
         private bool TutorExists(int id)

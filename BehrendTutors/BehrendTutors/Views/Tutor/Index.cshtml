@@ -1,15 +1,47 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<BehrendTutors.Models.TutorSession>
+
 @{
     ViewData["Title"] = "Tutor Home Page";
 }
+@{
+    IEnumerable<Class> classes = ViewData["Classes"] as IEnumerable<Class>;
+}
 
 <h1>Tutor Home Page</h1>
+
 <div class="container-fluid">
-    <div class="row">
+    <div class="row gx-5">
+        <div class="col-xl-3">
+            <div class="p-3 border bg-light">
+                <ul class="list-group">
+                    @foreach (Class c in classes)
+                    {
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xl-10 justify-content-xl-start">
+                                    @Html.DisplayFor(modelItem => c.Subject)-@Html.DisplayFor(modelItem => c.CourseNum)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl justify-content-xl-start">
+                                    @Html.DisplayFor(modelItem => c.ClassNum)
+                                </div>
+                                <div class="col-xl justify-content-xl-end">
+                                    @Html.DisplayFor(modelItem => c.ClassTitle)
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+        <div class="col-xl-3">
+            <div class="p-3 border bg-light">
+                
+            </div>
+        </div>
         <div class="col-xl-6">
-            <a asp-controller="TutorSession" asp-action="Create">Create New Admin</a>
+            <div class="p-3 border bg-light">Weekly view</div>
         </div>
     </div>
 </div>

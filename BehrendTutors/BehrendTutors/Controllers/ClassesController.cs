@@ -112,7 +112,7 @@ namespace BehrendTutors.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Admins");
             }
             return View(@class);
         }
@@ -147,7 +147,7 @@ namespace BehrendTutors.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index", "Admins");
         }
 
         private bool ClassExists(int id)

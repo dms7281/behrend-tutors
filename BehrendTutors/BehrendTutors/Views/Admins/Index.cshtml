@@ -12,13 +12,13 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-xl-6">
+        <div class="col">
             <a asp-controller="Admins" asp-action="Create">Create New Admin</a>
         </div>
-        <div class="col-xl-6">
+        <div class="col">
             <a asp-controller="Tutor" asp-action="Create">Create New Tutor</a>
         </div>
-        <div class="col-xl-6">
+        <div class="col">
             <a asp-controller="Classes" asp-action="Create">Create New Class</a>
         </div>
     </div>
@@ -79,9 +79,9 @@
                                 @Html.DisplayFor(modelItem => @tutor.Email)
                             </td>
                             <td>
-                                @* <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> *@
+                                <a asp-controller="Tutor" asp-action="Edit" asp-route-id="@tutor.Id">Edit</a> |
+                                <a asp-controller="Tutor" asp-action="Details" asp-route-id="@tutor.Id">Details</a> |
+                                <a asp-controller="Tutor" asp-action="Delete" asp-route-id="@tutor.Id">Delete</a>
                             </td>
                         </tr>
                     }
@@ -105,6 +105,13 @@
                                 </div>
                                 <div class="col-xl justify-content-xl-end">
                                     @Html.DisplayFor(modelItem => c.ClassTitle)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <a asp-controller="Classes" asp-action="Edit" asp-route-id="@c.id">Edit</a> |
+                                    <a asp-controller="Classes" asp-action="Details" asp-route-id="@c.id">Details</a> |
+                                    <a asp-controller="Classes" asp-action="Delete" asp-route-id="@c.id">Delete</a>
                                 </div>
                             </div>
                         </li>
