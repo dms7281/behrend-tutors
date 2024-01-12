@@ -22,13 +22,8 @@ namespace BehrendTutors.Controllers
         // GET: Tutor
         public async Task<IActionResult> Index()
         {
-            var classList = new List<Class>();
-            foreach (Class c in _context.Class)
-            {
-                classList.Add(c);
-            }
 
-            ViewData["Classes"] = classList;
+            ViewData["Classes"] = GetAllClasses();
             return View(await _context.TutorSession.ToListAsync());
         }
 
@@ -53,6 +48,7 @@ namespace BehrendTutors.Controllers
         // GET: Tutor/Create
         public IActionResult Create()
         {
+            ViewData["Classes"] = GetAllClasses();
             return View();
         }
 
@@ -61,14 +57,17 @@ namespace BehrendTutors.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email")] Tutor tutor)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,Classes")] Tutor tutor)
         {
             if (ModelState.IsValid)
             {
+                
                 _context.Add(tutor);
+
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index", "Admins");
             }
+            
             return View(tutor);
         }
 
@@ -159,6 +158,16 @@ namespace BehrendTutors.Controllers
         private bool TutorExists(int id)
         {
             return _context.Tutor.Any(e => e.Id == id);
+        }
+
+        private List<Class> GetAllClasses()
+        {
+            var classList = new List<Class>();
+            foreach (Class c in _context.Class)
+            {
+                classList.Add(c);
+            }
+            return classList;
         }
     }
 }

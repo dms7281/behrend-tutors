@@ -4,6 +4,7 @@ using BehrendTutors.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BehrendTutors.Migrations
 {
     [DbContext(typeof(BehrendTutorsContext))]
-    partial class BehrendTutorsContextModelSnapshot : ModelSnapshot
+    [Migration("20240112043202_ClassTut")]
+    partial class ClassTut
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -64,7 +67,7 @@ namespace BehrendTutors.Migrations
                     b.Property<string>("Subject")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("TutorId")
+                    b.Property<int>("TutorId")
                         .HasColumnType("int");
 
                     b.HasKey("id");
@@ -141,7 +144,9 @@ namespace BehrendTutors.Migrations
                 {
                     b.HasOne("BehrendTutors.Models.Tutor", null)
                         .WithMany("Classes")
-                        .HasForeignKey("TutorId");
+                        .HasForeignKey("TutorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("BehrendTutors.Models.ClassTutor", b =>

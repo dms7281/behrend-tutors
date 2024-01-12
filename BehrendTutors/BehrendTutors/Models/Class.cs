@@ -1,4 +1,6 @@
-﻿namespace BehrendTutors.Models
+﻿using BehrendTutors.Migrations;
+
+namespace BehrendTutors.Models
 {
     public class Class
     {
@@ -8,5 +10,7 @@
         public int SectionNum { get; set; }
         public string? ClassTitle { get; set; }
         public int ClassNum { get; set; }
+
+        public ICollection<ClassTutor>? ClassTutor { get; set; }
     }
 }

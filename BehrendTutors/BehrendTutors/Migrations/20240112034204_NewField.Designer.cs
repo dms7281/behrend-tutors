@@ -4,6 +4,7 @@ using BehrendTutors.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BehrendTutors.Migrations
 {
     [DbContext(typeof(BehrendTutorsContext))]
-    partial class BehrendTutorsContextModelSnapshot : ModelSnapshot
+    [Migration("20240112034204_NewField")]
+    partial class NewField
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -74,21 +77,6 @@ namespace BehrendTutors.Migrations
                     b.ToTable("Class");
                 });
 
-            modelBuilder.Entity("BehrendTutors.Models.ClassTutor", b =>
-                {
-                    b.Property<int>("TutorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ClassId")
-                        .HasColumnType("int");
-
-                    b.HasKey("TutorId", "ClassId");
-
-                    b.HasIndex("ClassId");
-
-                    b.ToTable("ClassTutor");
-                });
-
             modelBuilder.Entity("BehrendTutors.Models.Tutor", b =>
                 {
                     b.Property<int>("Id")
@@ -144,25 +132,6 @@ namespace BehrendTutors.Migrations
                         .HasForeignKey("TutorId");
                 });
 
-            modelBuilder.Entity("BehrendTutors.Models.ClassTutor", b =>
-                {
-                    b.HasOne("BehrendTutors.Models.Class", "Class")
-                        .WithMany("ClassTutor")
-                        .HasForeignKey("ClassId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("BehrendTutors.Models.Tutor", "Tutor")
-                        .WithMany("ClassTutor")
-                        .HasForeignKey("TutorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Class");
-
-                    b.Navigation("Tutor");
-                });
-
             modelBuilder.Entity("BehrendTutors.Models.TutorSession", b =>
                 {
                     b.HasOne("BehrendTutors.Models.Class", "Class")
@@ -178,15 +147,8 @@ namespace BehrendTutors.Migrations
                     b.Navigation("Tutor");
                 });
 
-            modelBuilder.Entity("BehrendTutors.Models.Class", b =>
-                {
-                    b.Navigation("ClassTutor");
-                });
-
             modelBuilder.Entity("BehrendTutors.Models.Tutor", b =>
                 {
-                    b.Navigation("ClassTutor");
-
                     b.Navigation("Classes");
                 });
 #pragma warning restore 612, 618
