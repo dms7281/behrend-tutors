@@ -17,12 +17,21 @@ namespace BehrendTutors.Controllers
         // GET: Admins
         public async Task<IActionResult> Index()
         {
-            
+            var tutorList = new List<Tutor>();
+            foreach (Tutor t in _context.Tutor)
+            {
+                tutorList.Add(t);
+            }
 
-            ViewData["Tutors"] = GetAllTutors();
+            ViewData["Tutors"] = tutorList;
 
-            ViewData["Classes"] = GetAllClasses();
+            var classList = new List<Class>();
+            foreach (Class c in _context.Class)
+            {
+                classList.Add(c);
+            }
 
+            ViewData["Classes"] = classList;
             return View(await _context.Admin.ToListAsync());
         }
 
@@ -154,26 +163,6 @@ namespace BehrendTutors.Controllers
         private bool AdminExists(int id)
         {
             return _context.Admin.Any(e => e.Id == id);
-        }
-
-        private List<Class> GetAllClasses()
-        {
-            var classList = new List<Class>();
-            foreach (Class c in _context.Class)
-            {
-                classList.Add(c);
-            }
-            return classList;
-        }
-
-        private List<Tutor> GetAllTutors()
-        {
-            var tutorList = new List<Tutor>();
-            foreach (Tutor t in _context.Tutor)
-            {
-                tutorList.Add(t);
-            }
-            return tutorList;
         }
     }
 }
