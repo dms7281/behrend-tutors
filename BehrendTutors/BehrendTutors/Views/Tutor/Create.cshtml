@@ -25,7 +25,6 @@
             <div class="form-group">
                 <label asp-for="SelectedClassIds" class="control-label">Select Classes</label>
                 <select asp-for="SelectedClassIds" asp-items="@(new SelectList(ViewBag.AllClasses ?? new List<Class>(), "id", "ClassTitle"))" class="form-control" multiple></select>
-
                 <span asp-validation-for="SelectedClassIds" class="text-danger"></span>
             </div>
             <div class="form-group">

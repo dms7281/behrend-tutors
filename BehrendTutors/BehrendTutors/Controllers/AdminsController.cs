@@ -32,6 +32,12 @@ namespace BehrendTutors.Controllers
             }
 
             ViewData["Classes"] = classList;
+
+            ViewBag.AllTutorClasses = _context.TutorClass.ToList() ?? new List<TutorClass>();
+            if (ViewBag.AllClasses == null)
+            {
+                ViewBag.AllClasses = new List<Class>();
+            }
             return View(await _context.Admin.ToListAsync());
         }
 

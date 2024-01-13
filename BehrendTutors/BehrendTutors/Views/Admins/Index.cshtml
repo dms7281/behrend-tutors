@@ -79,6 +79,33 @@
                                 @Html.DisplayFor(modelItem => @tutor.Email)
                             </td>
                             <td>
+                                <ul class="list-group">
+                                    @foreach (TutorClass tc in ViewBag.ALlTutorClasses)
+                                    {
+                                        @if(tutor.Id == tc.TutorId)
+                                        {
+                                            <li class="list-group-item">
+                                                <div class="row">
+                                                    <div class="col-xl-10 justify-content-xl-start">
+                                                        @Html.DisplayFor(modelItem => tc.Class.Subject)-@Html.DisplayFor(modelItem => tc.Class.CourseNum)
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xl justify-content-xl-start">
+                                                        @Html.DisplayFor(modelItem => tc.Class.ClassNum)
+                                                    </div>
+                                                    <div class="col-xl justify-content-xl-end">
+                                                        @Html.DisplayFor(modelItem => tc.Class.ClassTitle)
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                        
+                                    }
+                                </ul>
+
+                            </td>
+                            <td>
                                 <a asp-controller="Tutor" asp-action="Edit" asp-route-id="@tutor.Id">Edit</a> |
                                 <a asp-controller="Tutor" asp-action="Details" asp-route-id="@tutor.Id">Details</a> |
                                 <a asp-controller="Tutor" asp-action="Delete" asp-route-id="@tutor.Id">Delete</a>

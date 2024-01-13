@@ -24,8 +24,45 @@
                 <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="SelectedClassIds" class="control-label">Select Classes</label>
+                <select asp-for="SelectedClassIds" asp-items="@(new SelectList(ViewBag.AllClasses ?? new List<Class>(), "id", "ClassTitle"))" class="form-control" multiple></select>
+                <span asp-validation-for="SelectedClassIds" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
+        </form>
+    </div>
+    <div>
+        <form asp-action="DeleteClass">
+        @foreach (TutorClass tc in ViewBag.AllTutorClasses)
+        {
+            @if (Model.Id == tc.TutorId)
+            {
+                    <div class="form-group">
+                        <input type="hidden" asp-for="Id" value="@Model.Id" />
+                        <input type="hidden" asp-for="ClassId" value="@Model.ClassId" />
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-xl-10 justify-content-xl-start">
+                                    @Html.DisplayFor(modelItem => tc.Class.Subject)-@Html.DisplayFor(modelItem => tc.Class.CourseNum)
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xl justify-content-xl-start">
+                                    @Html.DisplayFor(modelItem => tc.Class.ClassNum)
+                                </div>
+                                <div class="col-xl justify-content-xl-end">
+                                    @Html.DisplayFor(modelItem => tc.Class.ClassTitle)
+                                </div>
+                            </div>
+                        </li>
+
+                        <input type="submit" value="Delete" class="btn btn-primary" />
+                    </div>
+            }
+
+        }
         </form>
     </div>
 </div>

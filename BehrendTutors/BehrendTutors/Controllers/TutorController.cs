@@ -74,14 +74,15 @@ namespace BehrendTutors.Controllers
                 _context.Add(tutor);
                 await _context.SaveChangesAsync();
 
+                /*If the SelectedClassIds list is not null and the list has any items then for each class in the db context,
+                if the SelectedClassIds list contains the id of whatever the current class is in the loop, then add it to the TutorClass model*/
                 if(tutor.SelectedClassIds != null && tutor.SelectedClassIds.Any())
                 {
-                    foreach(var classId in tutor.SelectedClassIds)
+                    foreach(Class c in _context.Class)
                     {
-                        var selectedClass = _context.Class.Find(classId);
-                        if(selectedClass != null)
+                        if (tutor.SelectedClassIds.Contains(c.id))
                         {
-                            tutor.TutorClasses?.Add(new TutorClass { TutorId = tutor.Id, ClassId = classId });
+                            tutor.TutorClasses?.Add(new TutorClass { TutorId = tutor.Id, ClassId = c.id });
                         }
                     }
                     
@@ -108,6 +109,20 @@ namespace BehrendTutors.Controllers
             {
                 return NotFound();
             }
+
+            ViewBag.AllClasses = _context.Class.ToList() ?? new List<Class>();
+            if (ViewBag.AllClasses == null)
+            {
+                ViewBag.AllClasses = new List<Class>();
+            }
+
+            ViewBag.AllTutorClasses = _context.TutorClass.ToList() ?? new List<TutorClass>();
+            if (ViewBag.AllClasses == null)
+            {
+                ViewBag.AllClasses = new List<Class>();
+            }
+
+
             return View(tutor);
         }
 
@@ -116,7 +131,7 @@ namespace BehrendTutors.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email")] Tutor tutor)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Email,SelectedClassIds")] Tutor tutor)
         {
             if (id != tutor.Id)
             {
@@ -128,7 +143,19 @@ namespace BehrendTutors.Controllers
                 try
                 {
                     _context.Update(tutor);
-                    await _context.SaveChangesAsync();
+
+                    if (tutor.SelectedClassIds != null && tutor.SelectedClassIds.Any())
+                    {
+                        foreach (Class c in _context.Class)
+                        {
+                            if (tutor.SelectedClassIds.Contains(c.id))
+                            {
+                                tutor.TutorClasses?.Add(new TutorClass { TutorId = tutor.Id, ClassId = c.id });
+                            }
+                        }
+
+                        await _context.SaveChangesAsync();
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -182,6 +209,21 @@ namespace BehrendTutors.Controllers
         private bool TutorExists(int id)
         {
             return _context.Tutor.Any(e => e.Id == id);
+        }
+        [HttpPost]
+        public async Task<IActionResult> DeleteClass(int id, int classId)
+        {
+            foreach(TutorClass tc in _context.TutorClass)
+            {
+                if(tc.TutorId == id && tc.ClassId == classId)
+                {
+                    _context.TutorClass.Remove(tc);
+                }
+            }
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index", "Admins");
         }
 
 

@@ -17,5 +17,8 @@ namespace BehrendTutors.Models
 
         [NotMapped]
         public List<int>? SelectedClassIds { get; set; }
+
+        [NotMapped]
+        public int ClassId { get; set; }
     }
 }
