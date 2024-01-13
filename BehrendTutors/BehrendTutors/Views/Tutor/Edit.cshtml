@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Edit";
+    
 }
 
 <h1>Edit</h1>
@@ -34,14 +35,14 @@
         </form>
     </div>
     <div>
-        <form asp-action="DeleteClass">
+        <form asp-action="DeleteClass" method="post">
         @foreach (TutorClass tc in ViewBag.AllTutorClasses)
         {
             @if (Model.Id == tc.TutorId)
             {
                     <div class="form-group">
-                        <input type="hidden" asp-for="Id" value="@Model.Id" />
-                        <input type="hidden" asp-for="ClassId" value="@Model.ClassId" />
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="ClassId" value="@tc.ClassId"/>
                         <li class="list-group-item">
                             <div class="row">
                                 <div class="col-xl-10 justify-content-xl-start">

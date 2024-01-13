@@ -148,8 +148,8 @@ namespace BehrendTutors.Controllers
                     {
                         foreach (Class c in _context.Class)
                         {
-                            if (tutor.SelectedClassIds.Contains(c.id))
-                            {
+                            if (tutor.SelectedClassIds.Contains(c.id) && !_context.TutorClass.Any(tc => tc.ClassId == c.id))
+                            { //Work on this, it works, but if you select a new class and an existing class it wont add the new class
                                 tutor.TutorClasses?.Add(new TutorClass { TutorId = tutor.Id, ClassId = c.id });
                             }
                         }
@@ -211,11 +211,13 @@ namespace BehrendTutors.Controllers
             return _context.Tutor.Any(e => e.Id == id);
         }
         [HttpPost]
-        public async Task<IActionResult> DeleteClass(int id, int classId)
+        public async Task<IActionResult> DeleteClass(int Id, int ClassId)
         {
+            
+            Console.WriteLine(Id +   " Fortnite " + ClassId);
             foreach(TutorClass tc in _context.TutorClass)
             {
-                if(tc.TutorId == id && tc.ClassId == classId)
+                if(tc.TutorId == Id && tc.ClassId == ClassId)
                 {
                     _context.TutorClass.Remove(tc);
                 }
