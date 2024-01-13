@@ -53,6 +53,12 @@ namespace BehrendTutors.Controllers
         // GET: Tutor/Create
         public IActionResult Create()
         {
+            ViewBag.AllClasses = _context.Class.ToList() ?? new List<Class>();
+            if (ViewBag.AllClasses == null)
+            {
+                ViewBag.AllClasses = new List<Class>();
+            }
+
             return View();
         }
 
@@ -61,14 +67,31 @@ namespace BehrendTutors.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Email")] Tutor tutor)
+        public async Task<IActionResult> Create([Bind("Id,Name,Email,SelectedClassIds")] Tutor tutor)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(tutor);
                 await _context.SaveChangesAsync();
+
+                if(tutor.SelectedClassIds != null && tutor.SelectedClassIds.Any())
+                {
+                    foreach(var classId in tutor.SelectedClassIds)
+                    {
+                        var selectedClass = _context.Class.Find(classId);
+                        if(selectedClass != null)
+                        {
+                            tutor.TutorClasses?.Add(new TutorClass { TutorId = tutor.Id, ClassId = classId });
+                        }
+                    }
+                    
+                    await _context.SaveChangesAsync();
+                }
                 return RedirectToAction("Index", "Admins");
             }
+
+            // If the model state is not valid, reload the available classes
+            ViewBag.AllClasses = _context.Class.ToList() ?? new List<Class>(); ;
             return View(tutor);
         }
 
@@ -160,5 +183,7 @@ namespace BehrendTutors.Controllers
         {
             return _context.Tutor.Any(e => e.Id == id);
         }
+
+
     }
 }

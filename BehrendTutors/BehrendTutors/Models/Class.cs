@@ -8,5 +8,6 @@
         public int SectionNum { get; set; }
         public string? ClassTitle { get; set; }
         public int ClassNum { get; set; }
+        public ICollection<TutorClass>? TutorClasses { get; set; }
     }
 }
