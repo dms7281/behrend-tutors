@@ -20,7 +20,7 @@ namespace BehrendTutors.Controllers
         }
 
         // GET: Tutor
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? id)
         {
             var classList = new List<Class>();
             foreach (Class c in _context.Class)
@@ -29,6 +29,22 @@ namespace BehrendTutors.Controllers
             }
 
             ViewData["Classes"] = classList;
+
+            if (id == null)
+            {
+                System.Console.WriteLine("Fortnite"); //It seems like an issue with the routing, index inherently shouldn't have an id value appended
+                return NotFound();
+            }
+
+            var tutor = await _context.Tutor
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (tutor == null)
+            {
+                System.Console.WriteLine("Amogus");
+                return NotFound();
+            }
+
+            //return View(tutor);
             return View(await _context.TutorSession.ToListAsync());
         }
 
@@ -143,13 +159,14 @@ namespace BehrendTutors.Controllers
                 try
                 {
                     _context.Update(tutor);
+                    await _context.SaveChangesAsync();
 
                     if (tutor.SelectedClassIds != null && tutor.SelectedClassIds.Any())
                     {
                         foreach (Class c in _context.Class)
                         {
-                            if (tutor.SelectedClassIds.Contains(c.id) && !_context.TutorClass.Any(tc => tc.ClassId == c.id))
-                            { //Work on this, it works, but if you select a new class and an existing class it wont add the new class
+                            if (tutor.SelectedClassIds.Contains(c.id) && !_context.TutorClass.Any(tc => tc.TutorId == id && tc.ClassId == c.id))
+                            {
                                 tutor.TutorClasses?.Add(new TutorClass { TutorId = tutor.Id, ClassId = c.id });
                             }
                         }
@@ -214,7 +231,6 @@ namespace BehrendTutors.Controllers
         public async Task<IActionResult> DeleteClass(int Id, int ClassId)
         {
             
-            Console.WriteLine(Id +   " Fortnite " + ClassId);
             foreach(TutorClass tc in _context.TutorClass)
             {
                 if(tc.TutorId == Id && tc.ClassId == ClassId)
@@ -225,7 +241,7 @@ namespace BehrendTutors.Controllers
 
             await _context.SaveChangesAsync();
 
-            return RedirectToAction("Index", "Admins");
+            return RedirectToAction("Edit", "Tutor", new { Id = Id});
         }
 
 
