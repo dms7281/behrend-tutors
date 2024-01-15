@@ -22,6 +22,7 @@ namespace BehrendTutors.Controllers
         // GET: Tutor
         public async Task<IActionResult> Index(int? id)
         {
+            
             var classList = new List<Class>();
             foreach (Class c in _context.Class)
             {
@@ -30,9 +31,19 @@ namespace BehrendTutors.Controllers
 
             ViewData["Classes"] = classList;
 
+            ViewBag.TutorClasses = new List<Class>();
+            foreach (TutorClass tc in _context.TutorClass)
+            {
+                if(tc.TutorId == id)
+                {
+                    ViewBag.TutorClasses.Add(tc.Class);
+                }
+                
+            }
+
             if (id == null)
             {
-                System.Console.WriteLine("Fortnite"); //It seems like an issue with the routing, index inherently shouldn't have an id value appended
+                
                 return NotFound();
             }
 
@@ -40,12 +51,14 @@ namespace BehrendTutors.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tutor == null)
             {
-                System.Console.WriteLine("Amogus");
+                
                 return NotFound();
             }
 
+            ViewBag.TutorId = id;
+
             //return View(tutor);
-            return View(await _context.TutorSession.ToListAsync());
+            return View();
         }
 
         // GET: Tutor/Details/5

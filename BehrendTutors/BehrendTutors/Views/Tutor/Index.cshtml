@@ -1,47 +1,69 @@
-﻿@model IEnumerable<BehrendTutors.Models.TutorSession>
+﻿@model BehrendTutors.Models.TutorSession
 
 @{
     ViewData["Title"] = "Tutor Home Page";
 }
 @{
     IEnumerable<Class> classes = ViewData["Classes"] as IEnumerable<Class>;
+    int? TutorId = ViewBag.TutorId as int?;
+    
+    
+
 }
 
 <h1>Tutor Home Page</h1>
 
 <div class="container-fluid">
     <div class="row gx-5">
-        <div class="col-xl-3">
-            <div class="p-3 border bg-light">
-                <ul class="list-group">
-                    @foreach (Class c in classes)
-                    {
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-xl-10 justify-content-xl-start">
-                                    @Html.DisplayFor(modelItem => c.Subject)-@Html.DisplayFor(modelItem => c.CourseNum)
-                                </div>
+        <form asp-controller="TutorSessions" asp-action="Create">
+            @* <div class="col-xl-3">
+                <div class="p-3 border bg-light">
+                    <ul class="list-group">
+                    
+                        @foreach (Class c in ViewBag.TutorClasses)
+                        {
+                            <div asp-for="SelectedClassId" class="btn btn-outline-primary">
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-xl-10 justify-content-xl-start">
+                                            @Html.DisplayFor(modelItem => c.Subject)-@Html.DisplayFor(modelItem => c.CourseNum)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xl justify-content-xl-start">
+                                            @Html.DisplayFor(modelItem => c.ClassNum)
+                                        </div>
+                                        <div class="col-xl justify-content-xl-end">
+                                            @Html.DisplayFor(modelItem => c.ClassTitle)
+                                        </div>
+                                    </div>
+                                </li>
                             </div>
-                            <div class="row">
-                                <div class="col-xl justify-content-xl-start">
-                                    @Html.DisplayFor(modelItem => c.ClassNum)
-                                </div>
-                                <div class="col-xl justify-content-xl-end">
-                                    @Html.DisplayFor(modelItem => c.ClassTitle)
-                                </div>
-                            </div>
-                        </li>
-                    }
-                </ul>
-            </div>
-        </div>
-        <div class="col-xl-3">
-            <div class="p-3 border bg-light">
-                <form asp-controller="TutorSessions" asp-action="Create">
+                        }
+                    </ul>
+                </div>
+            </div> *@
+            <div class="col-xl-3">
+                <div class="p-3 border bg-light">
+                    <input type="hidden" asp-for="TutorIdSession" value="@TutorId" />
+                        <div class="form-group">
+                            <label asp-for="SelectedClassId" class="control-label">Select Classes</label>
+                            <select asp-for="SelectedClassId" asp-items="@(new SelectList(ViewBag.TutorClasses ?? new List<Class>(), "id", "ClassTitle"))" class="form-control" single></select>
+                            <span asp-validation-for="SelectedClassId" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="SessionDateTime" class="control-label">Select Classes</label>
+                            <input asp-for="SessionDateTime" type="date" class="form-control"></input>
+                            <span asp-validation-for="SessionDateTime" class="text-danger"></span>
+                        </div>
 
-                </form>
+                        <div class="form-group">
+                            <input type="submit" value="Create" class="btn btn-primary" />
+                        </div>
+                
+                </div>
             </div>
-        </div>
+        </form>
         <div class="col-xl-6">
             <div class="p-3 border bg-light">Weekly view</div>
         </div>

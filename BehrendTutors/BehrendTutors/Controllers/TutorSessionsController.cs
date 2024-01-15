@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using BehrendTutors.Data;
 using BehrendTutors.Models;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+//using BehrendTutors.Migrations;
 
 namespace BehrendTutors.Controllers
 {
@@ -47,6 +48,8 @@ namespace BehrendTutors.Controllers
         // GET: TutorSessions/Create
         public IActionResult Create()
         {
+            
+
             return View();
         }
 
@@ -55,13 +58,34 @@ namespace BehrendTutors.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SessionDateTime")] TutorSession tutorSession)
+        public async Task<IActionResult> Create([Bind("SessionDateTime,SelectedClassId,TutorIdSession")] TutorSession tutorSession)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(tutorSession);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                foreach (Tutor t in _context.Tutor)
+                {
+                    if(tutorSession.TutorIdSession == t.Id)
+                    {
+                        tutorSession.Tutor = t;
+                    }
+                }
+                await _context.SaveChangesAsync();
+                
+                foreach (Class c in _context.Class)
+                {
+                    if (tutorSession.SelectedClassId == c.id)
+                    {
+                        tutorSession.Class = c;
+                    }
+                }
+
+                await _context.SaveChangesAsync();
+
+
+
+                return RedirectToAction("Index", "Tutor", new { Id = tutorSession.TutorIdSession });
             }
             return View(tutorSession);
         }
@@ -87,7 +111,7 @@ namespace BehrendTutors.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,SessionDateTime,StudentEmail")] TutorSession tutorSession)
+        public async Task<IActionResult> Edit(int id, [Bind("id,SessionDateTime,StudentEmail")] Models.TutorSession tutorSession)
         {
             if (id != tutorSession.id)
             {
