@@ -37,8 +37,13 @@ namespace BehrendTutors.Controllers
                 if(tc.TutorId == id)
                 {
                     ViewBag.TutorClasses.Add(tc.Class);
-                }
-                
+                }   
+            }
+
+            ViewBag.TutorSessions = _context.TutorSession.ToList() ?? new List<TutorSession>();
+            if (ViewBag.TutorSessions == null)
+            {
+                ViewBag.TutorSessions = new List<TutorSession>();
             }
 
             if (id == null)
@@ -56,6 +61,8 @@ namespace BehrendTutors.Controllers
             }
 
             ViewBag.TutorId = id;
+
+            ViewBag.TutorName = tutor.Name;
 
             //return View(tutor);
             return View();

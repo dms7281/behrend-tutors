@@ -58,7 +58,7 @@ namespace BehrendTutors.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("SessionDateTime,SelectedClassId,TutorIdSession")] TutorSession tutorSession)
+        public async Task<IActionResult> Create([Bind("SessionDateTime,SelectedClassId,TutorIdSession,SessionType")] TutorSession tutorSession)
         {
             if (ModelState.IsValid)
             {

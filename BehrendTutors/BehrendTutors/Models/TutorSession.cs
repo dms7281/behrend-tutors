@@ -4,6 +4,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace BehrendTutors.Models
 {
+
+    public enum TutorSessionType
+    {
+        Individual,
+        DropIns,
+        Group
+    }
+
     public class TutorSession
     {
         public int id { get; set; }
@@ -12,6 +20,7 @@ namespace BehrendTutors.Models
         public Tutor? Tutor { get; set; }
         public Class? Class { get; set; }
         public string? StudentEmail { get; set; }
+        public TutorSessionType SessionType { get; set; }
 
         [NotMapped]
         public int SelectedClassId { get; set; }

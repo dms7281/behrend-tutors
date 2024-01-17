@@ -117,6 +117,9 @@ namespace BehrendTutors.Migrations
                     b.Property<DateTime>("SessionDateTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("SessionType")
+                        .HasColumnType("int");
+
                     b.Property<string>("StudentEmail")
                         .HasColumnType("nvarchar(max)");
 

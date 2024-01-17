@@ -6,16 +6,21 @@
 @{
     IEnumerable<Class> classes = ViewData["Classes"] as IEnumerable<Class>;
     int? TutorId = ViewBag.TutorId as int?;
+    DateTime startTime = new DateTime(2024, 01, 14, 0, 0, 0);
     
-    
-
 }
 
-<h1>Tutor Home Page</h1>
+<head>
+    <!-- Other head elements... -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+</head>
+
+
+<h1>Hello @ViewBag.TutorName</h1>
 
 <div class="container-fluid">
     <div class="row gx-5">
-        <form asp-controller="TutorSessions" asp-action="Create">
             @* <div class="col-xl-3">
                 <div class="p-3 border bg-light">
                     <ul class="list-group">
@@ -43,29 +48,76 @@
                     </ul>
                 </div>
             </div> *@
+        
             <div class="col-xl-3">
                 <div class="p-3 border bg-light">
-                    <input type="hidden" asp-for="TutorIdSession" value="@TutorId" />
+                    <form asp-controller="TutorSessions" asp-action="Create">
+                        <input type="hidden" asp-for="TutorIdSession" value="@TutorId" />
+                        <div class="form-group">
+                            <label asp-for="SessionType" class="control-label"></label>
+                            <select asp-for="SessionType" asp-items="Html.GetEnumSelectList<TutorSessionType>()" class="form-control"></select>
+                        </div>
                         <div class="form-group">
                             <label asp-for="SelectedClassId" class="control-label">Select Classes</label>
                             <select asp-for="SelectedClassId" asp-items="@(new SelectList(ViewBag.TutorClasses ?? new List<Class>(), "id", "ClassTitle"))" class="form-control" single></select>
                             <span asp-validation-for="SelectedClassId" class="text-danger"></span>
                         </div>
                         <div class="form-group">
-                            <label asp-for="SessionDateTime" class="control-label">Select Classes</label>
-                            <input asp-for="SessionDateTime" type="date" class="form-control"></input>
+                            <label asp-for="SessionDateTime" class="control-label">Choose Date</label>
+                            <input asp-for="SessionDateTime" type="text" class="form-control flatpickr" />
                             <span asp-validation-for="SessionDateTime" class="text-danger"></span>
                         </div>
-
                         <div class="form-group">
                             <input type="submit" value="Create" class="btn btn-primary" />
                         </div>
-                
+                    </form>
                 </div>
             </div>
-        </form>
-        <div class="col-xl-6">
-            <div class="p-3 border bg-light">Weekly view</div>
+        
+        <div class="col-xl-9">
+            <div class="p-3 border bg-light">
+                @* <div class="row">
+                    <div class="col">
+                        @{
+                            for ()
+
+
+
+
+                            while (startTime.TimeOfDay != new TimeSpan(24, 0, 0))
+                            {
+                                <div class="row">
+
+                                    Fortnite
+                                    
+                                </div>
+                                startTime.AddHours(1);
+                            }
+                            }
+                    </div>
+                </div> *@
+            </div>
         </div>
+
+        
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        flatpickr(".flatpickr", {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            // You can customize other flatpickr options here
+        });
+    </script>
+}
+
+
+
+
+
+
+
+
+
