@@ -48,8 +48,6 @@ namespace BehrendTutors.Controllers
         // GET: TutorSessions/Create
         public IActionResult Create()
         {
-            
-
             return View();
         }
 
@@ -64,6 +62,8 @@ namespace BehrendTutors.Controllers
             {
                 _context.Add(tutorSession);
                 await _context.SaveChangesAsync();
+
+                //The id is the only thing being passed through, so it compares the id and then assigns the tutor
                 foreach (Tutor t in _context.Tutor)
                 {
                     if(tutorSession.TutorIdSession == t.Id)
@@ -73,6 +73,7 @@ namespace BehrendTutors.Controllers
                 }
                 await _context.SaveChangesAsync();
                 
+                //Compares the id of the selected class and assigns it to the session
                 foreach (Class c in _context.Class)
                 {
                     if (tutorSession.SelectedClassId == c.id)

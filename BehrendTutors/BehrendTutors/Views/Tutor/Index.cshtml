@@ -2,9 +2,6 @@
 
 @{
     ViewData["Title"] = "Tutor Home Page";
-}
-@{
-    IEnumerable<Class> classes = ViewData["Classes"] as IEnumerable<Class>;
     int? TutorId = ViewBag.TutorId as int?;
     DateTime startTime = new DateTime(2024, 01, 14, 0, 0, 0);
     
@@ -21,34 +18,6 @@
 
 <div class="container-fluid">
     <div class="row gx-5">
-            @* <div class="col-xl-3">
-                <div class="p-3 border bg-light">
-                    <ul class="list-group">
-                    
-                        @foreach (Class c in ViewBag.TutorClasses)
-                        {
-                            <div asp-for="SelectedClassId" class="btn btn-outline-primary">
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-xl-10 justify-content-xl-start">
-                                            @Html.DisplayFor(modelItem => c.Subject)-@Html.DisplayFor(modelItem => c.CourseNum)
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-xl justify-content-xl-start">
-                                            @Html.DisplayFor(modelItem => c.ClassNum)
-                                        </div>
-                                        <div class="col-xl justify-content-xl-end">
-                                            @Html.DisplayFor(modelItem => c.ClassTitle)
-                                        </div>
-                                    </div>
-                                </li>
-                            </div>
-                        }
-                    </ul>
-                </div>
-            </div> *@
-        
             <div class="col-xl-3">
                 <div class="p-3 border bg-light">
                     <form asp-controller="TutorSessions" asp-action="Create">
@@ -76,39 +45,18 @@
         
         <div class="col-xl-9">
             <div class="p-3 border bg-light">
-                @* <div class="row">
-                    <div class="col">
-                        @{
-                            for ()
-
-
-
-
-                            while (startTime.TimeOfDay != new TimeSpan(24, 0, 0))
-                            {
-                                <div class="row">
-
-                                    Fortnite
-                                    
-                                </div>
-                                startTime.AddHours(1);
-                            }
-                            }
-                    </div>
-                </div> *@
             </div>
         </div>
-
-        
     </div>
 </div>
 
 @section Scripts {
     <script>
+        //Flatpickr is the fancy calander that is used, config settings here
         flatpickr(".flatpickr", {
             enableTime: true,
             dateFormat: "Y-m-d H:i",
-            // You can customize other flatpickr options here
+            
         });
     </script>
 }

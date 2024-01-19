@@ -10,6 +10,7 @@ using BehrendTutors.Models;
 
 namespace BehrendTutors.Controllers
 {
+    
     public class TutorController : Controller
     {
         private readonly BehrendTutorsContext _context;
@@ -22,15 +23,10 @@ namespace BehrendTutors.Controllers
         // GET: Tutor
         public async Task<IActionResult> Index(int? id)
         {
+            //Index doesn't load without this ViewData, dont know why even after changes
+            ViewData["Classes"] = _context.Class.ToList() ?? new List<Class>();
             
-            var classList = new List<Class>();
-            foreach (Class c in _context.Class)
-            {
-                classList.Add(c);
-            }
-
-            ViewData["Classes"] = classList;
-
+            //Passing list of classes a tutor with a given id tutors
             ViewBag.TutorClasses = new List<Class>();
             foreach (TutorClass tc in _context.TutorClass)
             {
@@ -40,15 +36,11 @@ namespace BehrendTutors.Controllers
                 }   
             }
 
+            //Passing list of TutorSessions to tutor page for weekly view
             ViewBag.TutorSessions = _context.TutorSession.ToList() ?? new List<TutorSession>();
-            if (ViewBag.TutorSessions == null)
-            {
-                ViewBag.TutorSessions = new List<TutorSession>();
-            }
 
             if (id == null)
             {
-                
                 return NotFound();
             }
 
@@ -56,19 +48,17 @@ namespace BehrendTutors.Controllers
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (tutor == null)
             {
-                
                 return NotFound();
             }
 
-            ViewBag.TutorId = id;
+            
+            ViewBag.TutorId = id; //Will be passed into the tutor session create method
+            ViewBag.TutorName = tutor.Name; //Will be used to display name on page
 
-            ViewBag.TutorName = tutor.Name;
-
-            //return View(tutor);
             return View();
         }
 
-        // GET: Tutor/Details/5
+        // GET: Tutor/Details/id
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -147,16 +137,8 @@ namespace BehrendTutors.Controllers
             }
 
             ViewBag.AllClasses = _context.Class.ToList() ?? new List<Class>();
-            if (ViewBag.AllClasses == null)
-            {
-                ViewBag.AllClasses = new List<Class>();
-            }
 
             ViewBag.AllTutorClasses = _context.TutorClass.ToList() ?? new List<TutorClass>();
-            if (ViewBag.AllClasses == null)
-            {
-                ViewBag.AllClasses = new List<Class>();
-            }
 
 
             return View(tutor);
@@ -180,7 +162,9 @@ namespace BehrendTutors.Controllers
                 {
                     _context.Update(tutor);
                     await _context.SaveChangesAsync();
-
+                    
+                    /*Similar to the how SelectedClassIds is checked in the Create method, except theres an extra check to see if a given TutorClass
+                    that has the current tutor Id also has the iterated through class, so that it wont add it*/
                     if (tutor.SelectedClassIds != null && tutor.SelectedClassIds.Any())
                     {
                         foreach (Class c in _context.Class)
@@ -247,10 +231,13 @@ namespace BehrendTutors.Controllers
         {
             return _context.Tutor.Any(e => e.Id == id);
         }
+
         [HttpPost]
         public async Task<IActionResult> DeleteClass(int Id, int ClassId)
         {
-            
+            /*When the delete button for a tutors class is pressed, while editing the tutor it iterates through TutorClass
+            and if the tutor id is the same as the one being edited and the specific class id that is being deleted is the same
+            then delete that specific tutorclass entry*/
             foreach(TutorClass tc in _context.TutorClass)
             {
                 if(tc.TutorId == Id && tc.ClassId == ClassId)
