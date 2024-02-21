@@ -15,7 +15,17 @@ namespace BehrendTutor.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            int id = 1;
+
+            switch (id)
+            {
+                case 1:
+                    return View("Views/Student/Index.cshtml");
+                case 2:
+                    return View("Index", "Tutor");
+                default:
+                    return View("Views/Student/Index.cshtml");
+            }
         }
 
         public IActionResult Privacy()

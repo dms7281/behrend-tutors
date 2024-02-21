@@ -1,5 +1,6 @@
 ﻿using BehrendTutor.Data;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace BehrendTutor.Controllers
 {
@@ -11,7 +12,7 @@ namespace BehrendTutor.Controllers
         {
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             return View();
         }

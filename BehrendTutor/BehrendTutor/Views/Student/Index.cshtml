@@ -1,0 +1,59 @@
+﻿@model IEnumerable<BehrendTutor.Models.Class>
+@{
+    ViewData["Title"] = "View";
+}
+
+<h1>View</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                
+                @Html.DisplayNameFor(model => model.SubjectTypeId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.SectionNum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassTitle)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ClassCode)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SubjectTypeId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SectionNum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassTitle)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ClassCode)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
